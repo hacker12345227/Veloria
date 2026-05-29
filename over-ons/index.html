@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Over ons – Veloria Trouwduiven</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --groen: #1a3a2a;
+    --groen-licht: #2a5040;
+    --goud: #c9a84c;
+    --goud-licht: #e8c96a;
+    --wit: #ffffff;
+    --zwart: #1a1a1a;
+    --tekst-grijs: #3a3a3a;
+    --achtergrond: #fafaf8;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--zwart);
+    background: var(--achtergrond);
+    overflow-x: hidden;
+  }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.reveal-left  { transform: translateX(-50px); }
+  .reveal.reveal-right { transform: translateX(50px); }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stagger-children.visible > *:nth-child(1) { transition-delay: 0s; }
+  .stagger-children.visible > *:nth-child(2) { transition-delay: 0.13s; }
+  .stagger-children.visible > *:nth-child(3) { transition-delay: 0.26s; }
+  .stagger-children.visible > *:nth-child(4) { transition-delay: 0.39s; }
+  .stagger-children.visible > * { opacity: 1; transform: none; }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--groen);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    transition: box-shadow 0.3s;
+  }
+  header.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.35); }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .logo-img {
+    height: 52px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
+    transition: transform 0.3s ease;
+  }
+  .logo-wrap:hover .logo-img { transform: rotate(-5deg) scale(1.08); }
+
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text .naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--goud);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .logo-text .tagline {
+    font-size: 0.65rem;
+    color: rgba(201,168,76,0.7);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--goud);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+    position: relative;
+  }
+  .nav-links a.active { opacity: 1; }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--goud);
+  }
+  .nav-links a:not(.nav-btn):not(.active)::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--goud);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:not(.nav-btn):hover::after { width: 100%; }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--goud);
+    color: var(--goud) !important;
+    padding: 8px 20px;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s !important;
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+  }
+  .nav-btn:hover { background: var(--goud) !important; color: var(--groen) !important; }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    background: var(--groen);
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .breadcrumb {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 1.5rem;
+    position: relative;
+    animation: floatUp 0.9s ease both;
+  }
+  .breadcrumb a { color: rgba(201,168,76,0.5); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--goud); }
+  .breadcrumb span { margin: 0 0.5rem; }
+
+  .page-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 6rem);
+    color: var(--goud);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    position: relative;
+    animation: floatUp 0.9s 0.15s ease both;
+  }
+  .page-hero-sub {
+    font-size: 0.85rem;
+    color: rgba(201,168,76,0.55);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    margin-top: 1rem;
+    position: relative;
+    animation: floatUp 0.9s 0.28s ease both;
+  }
+
+  /* gouden lijn onder hero */
+  .hero-lijn {
+    width: 60px;
+    height: 1px;
+    background: rgba(201,168,76,0.4);
+    margin: 2rem auto 0;
+    position: relative;
+    animation: floatUp 0.9s 0.38s ease both;
+  }
+
+  /* ─── SECTIES ─── */
+  .section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--groen);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--goud); }
+
+  .divider-goud {
+    width: 60px;
+    height: 1px;
+    background: var(--goud);
+    margin-bottom: 2rem;
+    opacity: 0.6;
+  }
+
+  /* ─── INTRO GRID ─── */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .intro-tekst p {
+    font-size: 1rem;
+    color: var(--tekst-grijs);
+    line-height: 1.9;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+  .intro-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cirkel-wrap {
+    position: relative;
+    width: 360px;
+    height: 360px;
+  }
+  .cirkel-bg {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--groen);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.4s ease;
+  }
+  .cirkel-bg:hover { transform: scale(1.03); }
+  .cirkel-bg::before {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.22);
+    animation: ringPulse 4s ease-in-out infinite;
+  }
+  .cirkel-bg::after {
+    content: '';
+    position: absolute;
+    inset: -28px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+    animation: ringPulse 4s 1s ease-in-out infinite;
+  }
+  .cirkel-bg img {
+    width: 210px;
+    filter: drop-shadow(0 0 24px rgba(201,168,76,0.3));
+    animation: floatLogo 6s ease-in-out infinite;
+  }
+
+  /* ─── WAARDEN ─── */
+  .waarden-bg {
+    background: var(--groen);
+    padding: 6rem 2rem;
+  }
+  .waarden-titel {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    color: var(--goud);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .waarden-onder {
+    font-size: 0.85rem;
+    color: rgba(201,168,76,0.5);
+    text-align: center;
+    margin-bottom: 3.5rem;
+    font-weight: 300;
+  }
+  .waarden-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .waarde-card {
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 2.5rem 2rem;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  }
+  .waarde-card:hover {
+    border-color: rgba(201,168,76,0.5);
+    transform: translateY(-5px);
+    background: rgba(201,168,76,0.04);
+  }
+  .waarde-icoon {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .waarde-card:hover .waarde-icoon {
+    border-color: var(--goud);
+    transform: scale(1.1) rotate(5deg);
+  }
+  .waarde-naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--goud);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  .waarde-tekst {
+    font-size: 0.88rem;
+    color: rgba(201,168,76,0.65);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ─── TIJDLIJN ─── */
+  .tijdlijn {
+    max-width: 780px;
+    margin: 3.5rem auto 0;
+    position: relative;
+  }
+  .tijdlijn::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(201,168,76,0.2);
+  }
+  .tijdlijn-item {
+    padding: 0 0 3rem 2.5rem;
+    position: relative;
+  }
+  .tijdlijn-item:last-child { padding-bottom: 0; }
+  .tijdlijn-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--goud);
+    opacity: 0.6;
+  }
+  .tijdlijn-jaar {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--goud);
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+  }
+  .tijdlijn-titel {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--groen);
+    margin-bottom: 0.5rem;
+  }
+  .tijdlijn-tekst {
+    font-size: 0.88rem;
+    color: var(--tekst-grijs);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ─── TEAM ─── */
+  .team-bg {
+    background: var(--groen);
+    padding: 6rem 2rem;
+  }
+  .team-grid {
+    max-width: 900px;
+    margin: 3rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+  .team-card {
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .team-card:hover {
+    border-color: rgba(201,168,76,0.45);
+    transform: translateY(-4px);
+  }
+  .team-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .team-avatar svg { opacity: 0.8; }
+  .team-naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--goud);
+    letter-spacing: 0.05em;
+  }
+  .team-rol {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.45);
+    margin-top: -0.8rem;
+  }
+  .team-bio {
+    font-size: 0.88rem;
+    color: rgba(201,168,76,0.65);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ─── CTA ─── */
+  .cta-banner {
+    background: var(--groen);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--goud);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .cta-banner p {
+    color: rgba(201,168,76,0.6);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    font-size: 0.95rem;
+    position: relative;
+  }
+  .btn-primary {
+    background: var(--goud);
+    color: var(--groen);
+    border: none;
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    position: relative;
+  }
+  .btn-primary:hover {
+    background: var(--goud-licht);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.35);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--goud);
+    border: 1px solid rgba(201,168,76,0.5);
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    position: relative;
+  }
+  .btn-outline:hover { border-color: var(--goud); color: var(--goud-licht); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--groen);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 3rem 2rem 2rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-logo .naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--goud);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .footer-logo p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 240px;
+  }
+  .footer-col h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col ul li a {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s, padding-left 0.2s;
+  }
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.85); padding-left: 4px; }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+  .footer-social { display: flex; gap: 1rem; }
+  .footer-social a {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: rgba(201,168,76,0.8); }
+
+  /* ─── ANIMATIES ─── */
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.04); opacity: 0.6; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .intro-grid { grid-template-columns: 1fr; }
+    .intro-visual { order: -1; }
+    .waarden-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    .team-grid { grid-template-columns: 1fr; max-width: 420px; margin: 3rem auto 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .cirkel-wrap { width: 280px; height: 280px; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="main-header">
+  <nav>
+    <a href="/" class="logo-wrap">
+      <img src="logo.png" alt="Veloria logo" class="logo-img">
+      <div class="logo-text">
+        <span class="naam">Veloria</span>
+        <span class="tagline">Trouwduiven</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../over-ons" class="active">Over ons</a></li>
+      <li><a href="../pakketten">Pakketten</a></li>
+      <li><a href="../werkwijze">Werkwijze</a></li>
+      <li><a href="../faq">FAQ</a></li>
+      <li><a href="../reserveren" class="nav-btn">Reserveren</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <p class="breadcrumb"><a href="/">Home</a><span>·</span>Over ons</p>
+  <h1 class="page-hero-title">Over ons</h1>
+  <p class="page-hero-sub">Passie voor het mooiste moment op uw grote dag</p>
+  <div class="hero-lijn"></div>
+</section>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="intro-grid">
+      <div class="intro-tekst reveal reveal-left">
+        <span class="section-label">Ons verhaal</span>
+        <h2 class="section-title">Liefde die de <em>lucht</em> in gaat</h2>
+        <div class="divider-goud"></div>
+        <p>Veloria is ontstaan uit een diep verlangen om trouwdagen te verrijken met een moment van ongerepte schoonheid. Oprichtster Isabelle van der Berg liet bij haar eigen huwelijk voor het eerst witte duiven los — en zag hoe dat ene moment haar gasten tot tranen toe bewoog.</p>
+        <p>Sindsdien heeft Veloria meer dan vijfhonderd bruidsparen in heel Nederland en België begeleid. Elk met dezelfde toewijding, dezelfde precisie en dezelfde liefde voor het vak die bij ons eerste huwelijk zo goed voelde.</p>
+        <p>Wij zijn geen evenementenbedrijf. Wij zijn een klein, gepassioneerd team dat gelooft dat grote momenten in kleine details zitten — in de stilte vlak voordat de mand opengaat, in de vleugels die uitslaan naar de lucht.</p>
+      </div>
+      <div class="intro-visual reveal reveal-right">
+        <div class="cirkel-wrap">
+          <div class="cirkel-bg">
+            <img src="../logo.png" alt="Veloria logo">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAARDEN -->
+<section class="waarden-bg">
+  <div style="max-width:1100px;margin:0 auto;">
+    <span class="section-label reveal" style="color:rgba(201,168,76,0.7);display:block;text-align:center;">Waar wij voor staan</span>
+    <h2 class="waarden-titel reveal">Onze waarden</h2>
+    <p class="waarden-onder reveal">Elke keuze die wij maken is gebaseerd op drie kernwaarden</p>
+    <div class="waarden-grid stagger-children">
+
+      <div class="waarde-card">
+        <div class="waarde-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 19S3 14 3 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11z"/>
+          </svg>
+        </div>
+        <div class="waarde-naam">Zorg &amp; Welzijn</div>
+        <p class="waarde-tekst">Onze duiven zijn geen rekwisieten — het zijn dieren die wij liefhebben. Ze worden dagelijks verzorgd, krijgen de beste voeding en leven in ruime, liefdevolle omstandigheden. Welzijn staat altijd voorop.</p>
+      </div>
+
+      <div class="waarde-card">
+        <div class="waarde-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M11 7v4l3 2"/>
+          </svg>
+        </div>
+        <div class="waarde-naam">Precisie</div>
+        <p class="waarde-tekst">Uw trouwdag heeft geen ruimte voor fouten. Wij arriveren altijd op tijd, plannen elk detail vooraf en stemmen af met uw ceremoniemeester zodat het moment naadloos aansluit op uw programma.</p>
+      </div>
+
+      <div class="waarde-card">
+        <div class="waarde-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L9.5 8.5 3 9.3l4.5 4.4-1.1 6.3L12 17l5.6 3-1.1-6.3L21 9.3l-6.5-.8L12 2z"/>
+          </svg>
+        </div>
+        <div class="waarde-naam">Magie</div>
+        <p class="waarde-tekst">Elk moment dat wij creëren moet adembenemend zijn. Niet alleen voor het bruidspaar, maar voor elke gast. Wij denken na over de lichtval, de compositie, de timing — want magie ontstaat niet vanzelf.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIJDLIJN -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-label reveal">Onze geschiedenis</span>
+    <h2 class="section-title reveal">Hoe <em>Veloria</em> ontstond</h2>
+    <div class="divider-goud reveal"></div>
+
+    <div class="tijdlijn">
+      <div class="tijdlijn-item reveal">
+        <div class="tijdlijn-jaar">2014</div>
+        <div class="tijdlijn-titel">Het eerste moment</div>
+        <p class="tijdlijn-tekst">Isabelle laat voor het eerst witte duiven los op haar eigen bruiloft in Brugge. De reactie van de gasten zet haar aan het denken: dit wil iedereen meemaken.</p>
+      </div>
+      <div class="tijdlijn-item reveal">
+        <div class="tijdlijn-jaar">2015</div>
+        <div class="tijdlijn-titel">Veloria wordt opgericht</div>
+        <p class="tijdlijn-tekst">Met drie getrainde duiven en één mand begint Isabelle Veloria vanuit haar tuin in Rotterdam. De eerste bruiloft volgt al binnen een maand.</p>
+      </div>
+      <div class="tijdlijn-item reveal">
+        <div class="tijdlijn-jaar">2018</div>
+        <div class="tijdlijn-titel">Uitbreiding naar België</div>
+        <p class="tijdlijn-tekst">Na groeiende vraag vanuit Vlaanderen breidt Veloria uit naar de Belgische markt. Het team groeit naar vijf personen en het duivenbestand naar veertig vogels.</p>
+      </div>
+      <div class="tijdlijn-item reveal">
+        <div class="tijdlijn-jaar">2021</div>
+        <div class="tijdlijn-titel">Honderdste huwelijk</div>
+        <p class="tijdlijn-tekst">Een mijlpaal: de honderdste bruiloft wordt gevierd met een speciaal Grandeur-pakket voor het bruidspaar, als dank voor hun vertrouwen in Veloria.</p>
+      </div>
+      <div class="tijdlijn-item reveal">
+        <div class="tijdlijn-jaar">2025</div>
+        <div class="tijdlijn-titel">Meer dan 500 bruidsparen</div>
+        <p class="tijdlijn-tekst">Veloria begeleidt inmiddels meer dan vijfhonderd bruidsparen per jaar en is uitgegroeid tot het meest gewaardeerde trouwduivenbedrijf in de Benelux.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-bg">
+  <div style="max-width:1100px;margin:0 auto;">
+    <span class="section-label reveal" style="color:rgba(201,168,76,0.7);display:block;text-align:center;">De mensen achter Veloria</span>
+    <h2 class="waarden-titel reveal">Ons team</h2>
+    <p class="waarden-onder reveal">Klein van omvang, groot van hart</p>
+
+    <div class="team-grid stagger-children">
+
+      <div class="team-card">
+        <div class="team-avatar">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="11" r="5"/>
+            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="team-naam">Isabelle van der Berg</div>
+          <div class="team-rol">Oprichtster &amp; Hoofdbegeleider</div>
+        </div>
+        <p class="team-bio">Isabelle combineert tien jaar ervaring met een onuitputtelijke passie voor het creëren van onvergetelijke huwelijksmomenten. Zij is bij elke Grandeur-boeking persoonlijk aanwezig.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="11" r="5"/>
+            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="team-naam">Thomas Mertens</div>
+          <div class="team-rol">Duivenverzorger &amp; Trainer</div>
+        </div>
+        <p class="team-bio">Thomas zorgt dagelijks voor het welzijn van onze duiven. Met zijn achtergrond in diergedrag en jaar­lang enthousiasme voor postduiven is hij de hoeksteen van ons team.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="11" r="5"/>
+            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="team-naam">Sophie Janssen</div>
+          <div class="team-rol">Ceremoniebegeleider</div>
+        </div>
+        <p class="team-bio">Sophie begeleidt de Romantiek- en Harmonie-pakketten met een rustige, warme aanwezigheid. Ze zorgt ervoor dat het loslaten precies op het juiste moment plaatsvindt.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="11" r="5"/>
+            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="team-naam">Lena De Smedt</div>
+          <div class="team-rol">Klantcontact &amp; Planning</div>
+        </div>
+        <p class="team-bio">Lena is uw eerste aanspreekpunt en regelt alles van reservering tot dag-coördinatie. Haar warmte en oog voor detail maken het planningsproces zo zorgeloos mogelijk.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner reveal">
+  <h2>Klaar om kennis te maken?</h2>
+  <p>Neem vrijblijvend contact op — wij vertellen u graag meer over wat Veloria voor uw dag kan betekenen.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;">
+    <a href="/reserveren" class="btn-primary">Reserveren</a>
+    <a href="/pakketten" class="btn-outline">Bekijk pakketten</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <span class="naam">Veloria</span>
+        <p>Wij brengen magie en symboliek op uw mooiste dag. Witte duiven als eeuwig symbool van liefde, vrede en een nieuw begin samen.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigatie</h4>
+        <ul>
+          <li><a href="../over-ons">Over ons</a></li>
+          <li><a href="../pakketten">Pakketten</a></li>
+          <li><a href="../werkwijze">Werkwijze</a></li>
+          <li><a href="../faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Pakketten</h4>
+        <ul>
+          <li><a href="/pakketten#romantiek">Romantiek – €149</a></li>
+          <li><a href="/pakketten#harmonie">Harmonie – €289</a></li>
+          <li><a href="/pakketten#grandeur">Grandeur – €449</a></li>
+          <li><a href="/reserveren">Op maat</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@veloria.nl">info@veloria.nl</a></li>
+          <li><a href="tel:+31612345678">+31 6 12 34 56 78</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Veloria – Trouwduiven. Alle rechten voorbehouden.</p>
+      <div class="footer-social">
+        <a href="/privacy">Privacy</a>
+        <a href="/algemene-voorwaarden">Algemene voorwaarden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header shadow
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal, .stagger-children').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

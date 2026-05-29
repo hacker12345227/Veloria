@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Werkwijze – Veloria Trouwduiven</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --groen: #1a3a2a;
+    --groen-licht: #2a5040;
+    --goud: #c9a84c;
+    --goud-licht: #e8c96a;
+    --goud-pale: #f5e6b8;
+    --wit: #ffffff;
+    --zwart: #1a1a1a;
+    --tekst-grijs: #3a3a3a;
+    --achtergrond: #fafaf8;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--zwart);
+    background: var(--achtergrond);
+    overflow-x: hidden;
+  }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.reveal-left  { transform: translateX(-50px); }
+  .reveal.reveal-right { transform: translateX(50px); }
+  .reveal.reveal-scale { transform: scale(0.94); }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stagger-children.visible > *:nth-child(1) { transition-delay: 0s; }
+  .stagger-children.visible > *:nth-child(2) { transition-delay: 0.13s; }
+  .stagger-children.visible > *:nth-child(3) { transition-delay: 0.26s; }
+  .stagger-children.visible > *:nth-child(4) { transition-delay: 0.39s; }
+  .stagger-children.visible > *:nth-child(5) { transition-delay: 0.52s; }
+  .stagger-children.visible > * { opacity: 1; transform: none; }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--groen);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    transition: box-shadow 0.3s;
+  }
+  header.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.35); }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .logo-img {
+    height: 52px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
+    transition: transform 0.3s ease;
+  }
+  .logo-wrap:hover .logo-img { transform: rotate(-5deg) scale(1.08); }
+
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text .naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--goud);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .logo-text .tagline {
+    font-size: 0.65rem;
+    color: rgba(201,168,76,0.7);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--goud);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+    position: relative;
+  }
+  .nav-links a.active { opacity: 1; }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--goud);
+  }
+  .nav-links a:not(.nav-btn):not(.active)::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--goud);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:not(.nav-btn):hover::after { width: 100%; }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--goud);
+    color: var(--goud) !important;
+    padding: 8px 20px;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s !important;
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+  }
+  .nav-btn:hover { background: var(--goud) !important; color: var(--groen) !important; }
+
+  /* ─── PAGE HERO ─── */
+  .page-hero {
+    background: var(--groen);
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Floating particles */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(201,168,76,0.4);
+    border-radius: 50%;
+    animation: drift linear infinite;
+  }
+  @keyframes drift {
+    0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(-20px) translateX(var(--dx)) scale(1.5); opacity: 0; }
+  }
+
+  .breadcrumb {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 1.5rem;
+    position: relative;
+    animation: floatUp 0.9s ease both;
+  }
+  .breadcrumb a { color: rgba(201,168,76,0.5); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--goud); }
+  .breadcrumb span { margin: 0 0.5rem; }
+
+  .page-hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 6rem);
+    color: var(--goud);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    position: relative;
+    animation: floatUp 0.9s 0.15s ease both;
+  }
+  .page-hero-sub {
+    font-size: 0.85rem;
+    color: rgba(201,168,76,0.55);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    margin-top: 1rem;
+    position: relative;
+    animation: floatUp 0.9s 0.28s ease both;
+  }
+  .hero-lijn {
+    width: 60px;
+    height: 1px;
+    background: rgba(201,168,76,0.4);
+    margin: 2rem auto 0;
+    position: relative;
+    animation: floatUp 0.9s 0.38s ease both;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--groen);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--goud); }
+
+  .divider-goud {
+    width: 60px;
+    height: 1px;
+    background: var(--goud);
+    margin-bottom: 2rem;
+    opacity: 0.6;
+  }
+
+  /* ─── GROTE STAPPEN ─── */
+  .stappen-wrap {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .stap-groot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .stap-groot:nth-child(even) .stap-tekst-blok { order: 2; }
+  .stap-groot:nth-child(even) .stap-visueel-blok { order: 1; }
+
+  .stap-tekst-blok {
+    background: var(--achtergrond);
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .stap-visueel-blok {
+    background: var(--groen);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stap-visueel-blok::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .stap-nummer-groot {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10rem;
+    font-weight: 300;
+    color: var(--goud);
+    opacity: 0.12;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.4s;
+  }
+  .stap-groot:hover .stap-nummer-groot { opacity: 0.22; }
+
+  .stap-icoon-groot {
+    width: 90px;
+    height: 90px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .stap-icoon-groot::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    animation: ringPulse 4s ease-in-out infinite;
+  }
+  .stap-groot:hover .stap-icoon-groot {
+    border-color: var(--goud);
+    transform: scale(1.08) rotate(5deg);
+  }
+
+  .stap-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 0.5rem;
+    opacity: 0.75;
+  }
+
+  .stap-titel-groot {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 300;
+    color: var(--groen);
+    margin-bottom: 1.2rem;
+    line-height: 1.2;
+  }
+  .stap-titel-groot em { font-style: italic; color: var(--goud); }
+
+  .stap-tekst-groot {
+    font-size: 0.92rem;
+    color: var(--tekst-grijs);
+    line-height: 1.9;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .stap-detail-list {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .stap-detail-list li {
+    font-size: 0.82rem;
+    color: var(--tekst-grijs);
+    font-weight: 300;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+  }
+  .stap-detail-list li::before {
+    content: '✦';
+    color: var(--goud);
+    font-size: 0.5rem;
+    margin-top: 5px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  /* Connecting line between steps */
+  .stap-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    position: relative;
+  }
+  .stap-connector::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.15), rgba(201,168,76,0.4), rgba(201,168,76,0.15));
+  }
+  .stap-connector-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--goud);
+    opacity: 0.5;
+    position: relative;
+    z-index: 1;
+    animation: connectorPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes connectorPulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.6); opacity: 0.9; }
+  }
+
+  /* ─── TIJDSLINE DETAIL SECTIE ─── */
+  .detail-bg {
+    background: var(--groen);
+    padding: 6rem 2rem;
+  }
+
+  .detail-grid {
+    max-width: 1100px;
+    margin: 3.5rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .detail-card {
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.35s, transform 0.35s, background 0.35s;
+  }
+  .detail-card:hover {
+    border-color: rgba(201,168,76,0.5);
+    transform: translateY(-6px);
+    background: rgba(201,168,76,0.04);
+  }
+  .detail-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--goud);
+    transition: width 0.4s ease;
+    opacity: 0.6;
+  }
+  .detail-card:hover::after { width: 100%; }
+
+  .detail-nr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--goud);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .detail-titel {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 300;
+    color: var(--goud);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  .detail-tekst {
+    font-size: 0.85rem;
+    color: rgba(201,168,76,0.6);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ─── GARANTIES SECTIE ─── */
+  .garanties-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .garantie-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 2rem;
+    border: 1px solid rgba(201,168,76,0.12);
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  }
+  .garantie-item:hover {
+    border-color: rgba(201,168,76,0.35);
+    background: rgba(201,168,76,0.025);
+    transform: translateY(-3px);
+  }
+
+  .garantie-icoon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .garantie-item:hover .garantie-icoon {
+    border-color: var(--goud);
+    transform: scale(1.1) rotate(6deg);
+  }
+
+  .garantie-tekst h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--groen);
+    margin-bottom: 0.4rem;
+  }
+  .garantie-tekst p {
+    font-size: 0.85rem;
+    color: var(--tekst-grijs);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ─── CTA ─── */
+  .cta-banner {
+    background: var(--groen);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(201,168,76,0.12);
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--goud);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .cta-banner p {
+    color: rgba(201,168,76,0.6);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    font-size: 0.95rem;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--goud);
+    color: var(--groen);
+    border: none;
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    position: relative;
+  }
+  .btn-primary:hover {
+    background: var(--goud-licht);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.35);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--goud);
+    border: 1px solid rgba(201,168,76,0.5);
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    position: relative;
+  }
+  .btn-outline:hover { border-color: var(--goud); color: var(--goud-licht); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--groen);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 3rem 2rem 2rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-logo .naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--goud);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .footer-logo p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 240px;
+  }
+  .footer-col h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col ul li a {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s, padding-left 0.2s;
+  }
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.85); padding-left: 4px; }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+  .footer-social { display: flex; gap: 1rem; }
+  .footer-social a {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: rgba(201,168,76,0.8); }
+  .footer-made-by { font-size: 0.75rem; color: rgba(255,255,255,0.3); font-weight: 300; }
+  .footer-made-by a { color: rgba(201,168,76,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-made-by a:hover { color: var(--goud); }
+
+  /* ─── ANIMATIES ─── */
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.04); opacity: 0.6; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .stap-groot {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+    .stap-groot:nth-child(even) .stap-tekst-blok { order: 1; }
+    .stap-groot:nth-child(even) .stap-visueel-blok { order: 2; }
+    .stap-tekst-blok { padding: 3rem 2rem; }
+    .stap-visueel-blok { min-height: 220px; }
+    .detail-grid { grid-template-columns: 1fr; max-width: 420px; margin: 3rem auto 0; }
+    .garanties-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="main-header">
+  <nav>
+    <a href="/" class="logo-wrap">
+      <img src="../logo.png" alt="Veloria logo" class="logo-img">
+      <div class="logo-text">
+        <span class="naam">Veloria</span>
+        <span class="tagline">Trouwduiven</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../over-ons">Over ons</a></li>
+      <li><a href="../pakketten">Pakketten</a></li>
+      <li><a href="../werkwijze" class="active">Werkwijze</a></li>
+      <li><a href="../faq">FAQ</a></li>
+      <li><a href="../reserveren" class="nav-btn">Reserveren</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="particles" id="particles"></div>
+  <p class="breadcrumb"><a href="/">Home</a><span>·</span>Werkwijze</p>
+  <h1 class="page-hero-title">Werkwijze</h1>
+  <p class="page-hero-sub">Van het eerste contact tot het magische moment van loslaten</p>
+  <div class="hero-lijn"></div>
+</section>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="section-inner" style="max-width:720px;">
+    <span class="section-label reveal" style="text-align:center;display:block;">Hoe het werkt</span>
+    <h2 class="section-title reveal" style="text-align:center;">Elk detail, met <em>zorg</em> geregeld</h2>
+    <div class="divider-goud reveal" style="margin:0 auto 2rem;"></div>
+    <p class="reveal" style="font-size:1rem;color:var(--tekst-grijs);line-height:1.9;font-weight:300;text-align:center;">
+      Bij Veloria nemen wij u van begin tot eind bij de hand. Ons proces is eenvoudig, persoonlijk en volledig afgestemd op uw dag — zodat u op het moment zelf nergens aan hoeft te denken. Alleen aan elkaar.
+    </p>
+  </div>
+</section>
+
+<!-- STAPPEN -->
+<div class="stappen-wrap">
+
+  <!-- STAP 1 -->
+  <div class="stap-groot">
+    <div class="stap-tekst-blok reveal reveal-left">
+      <div class="stap-label">Stap 01</div>
+      <h2 class="stap-titel-groot">Vrijblijvend <em>contact</em></h2>
+      <p class="stap-tekst-groot">
+        Alles begint met een gesprek. U neemt contact op via onze website, e-mail of telefoon — en wij luisteren. We willen graag weten hoe u uw trouwdag voor zich ziet, wat uw locatie is en welke sfeer u voor ogen heeft.
+      </p>
+      <p class="stap-tekst-groot">
+        Geen verplichtingen, geen haast. Gewoon een hartelijk gesprek om te kijken of Veloria bij u past.
+      </p>
+      <ul class="stap-detail-list">
+        <li>Bereikbaar via e-mail, telefoon of contactformulier</li>
+        <li>Wij reageren binnen 24 uur op uw aanvraag</li>
+        <li>Eerste gesprek volledig vrijblijvend en kosteloos</li>
+      </ul>
+    </div>
+    <div class="stap-visueel-blok">
+      <div class="stap-nummer-groot">01</div>
+      <div class="stap-icoon-groot">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 6.5c0-1.1.84-2 1.88-2h3.24c.76 0 1.44.5 1.68 1.24l1.64 4.88c.27.72 0 1.52-.55 1.92l-2.02 1.44a17 17 0 0 0 8.65 8.65l2.02-2.6c.4-.54 1.2-.82 1.92-.55l4.88 1.64c.74.24 1.24.92 1.24 1.68v3.24c0 1.1-.9 1.96-2 1.96C13.5 29.8 7 23.3 7 6.5z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="stap-connector reveal"><div class="stap-connector-dot"></div></div>
+
+  <!-- STAP 2 -->
+  <div class="stap-groot">
+    <div class="stap-visueel-blok">
+      <div class="stap-nummer-groot">02</div>
+      <div class="stap-icoon-groot">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="7" width="20" height="23" rx="2"/>
+          <path d="M13 7V5.5a1.5 1.5 0 0 1 3 0V7"/>
+          <path d="M20 7V5.5a1.5 1.5 0 0 1 3 0V7"/>
+          <line x1="13" y1="15" x2="23" y2="15"/>
+          <line x1="13" y1="19.5" x2="23" y2="19.5"/>
+          <line x1="13" y1="24" x2="18" y2="24"/>
+        </svg>
+      </div>
+    </div>
+    <div class="stap-tekst-blok reveal reveal-right">
+      <div class="stap-label">Stap 02</div>
+      <h2 class="stap-titel-groot">Persoonlijk <em>plan</em> op maat</h2>
+      <p class="stap-tekst-groot">
+        Na het eerste gesprek stellen wij een plan op dat volledig aansluit op uw ceremonie. We stemmen de timing af, bepalen de exacte locatie voor het moment van loslaten en kiezen samen het pakket dat bij u past.
+      </p>
+      <p class="stap-tekst-groot">
+        Wij coördineren ook graag met uw trouwplanner, ceremoniemeester of fotograaf — zodat alles naadloos in uw programma past.
+      </p>
+      <ul class="stap-detail-list">
+        <li>Op maat gemaakt plan voor uw specifieke locatie</li>
+        <li>Afstemming met uw overige leveranciers mogelijk</li>
+        <li>Proefvlucht inbegrepen bij Harmonie &amp; Grandeur pakket</li>
+        <li>Definitieve bevestiging na uw akkoord</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stap-connector reveal"><div class="stap-connector-dot"></div></div>
+
+  <!-- STAP 3 -->
+  <div class="stap-groot">
+    <div class="stap-tekst-blok reveal reveal-left">
+      <div class="stap-label">Stap 03</div>
+      <h2 class="stap-titel-groot">Aankomst op <em>uw dag</em></h2>
+      <p class="stap-tekst-groot">
+        Op uw trouwdag arriveert onze begeleider ruim op tijd — volledig voorbereid, met de duiven in sfeervolle manden en in discrete kledij die past bij de elegantie van uw feest.
+      </p>
+      <p class="stap-tekst-groot">
+        Wij stellen alles rustig op, begroeten u kort en zorgen dat de duiven comfortabel en kalm zijn, klaar voor het grote moment.
+      </p>
+      <ul class="stap-detail-list">
+        <li>Aankomst minimaal 30 minuten voor het moment</li>
+        <li>Discreet en elegant geklede begeleider</li>
+        <li>Duiven vervoerd in sfeervolle, versierde manden</li>
+        <li>Korte briefing voor het bruidspaar indien gewenst</li>
+      </ul>
+    </div>
+    <div class="stap-visueel-blok">
+      <div class="stap-nummer-groot">03</div>
+      <div class="stap-icoon-groot">
+        <svg width="40" height="40" viewBox="0 0 1280 1237" fill="#c9a84c" stroke="none" style="opacity:0.9;">
+          <g transform="translate(0,1237) scale(0.1,-0.1)">
+            <path d="M940 11645 c-21 -25 -5 -107 41 -213 54 -124 446 -901 574 -1137 438 -810 819 -1352 1484 -2110 716 -818 1271 -1316 1870 -1680 228 -138 713 -369 771 -368 33 1 425 136 443 152 4 4 -122 86 -280 182 -459 278 -723 459 -1068 734 -794 632 -1641 1513 -2165 2250 -347 488 -905 1402 -886 1451 5 13 114 14 958 8 1006 -7 1250 -3 2368 40 l575 23 154 -65 c347 -144 508 -249 634 -414 66 -87 116 -184 150 -293 29 -94 32 -115 93 -510 114 -752 230 -1154 419 -1445 105 -163 346 -369 533 -458 128 -61 248 -57 474 14 169 54 210 84 395 296 234 269 455 471 561 512 89 34 410 46 575 21 185 -28 314 -82 607 -255 215 -127 208 -124 400 -190 256 -89 490 -174 490 -180 -1 -3 -64 -48 -142 -100 -398 -268 -561 -393 -733 -565 -254 -254 -439 -516 -892 -1263 -502 -829 -650 -1040 -912 -1303 -156 -156 -306 -274 -567 -447 -226 -149 -335 -207 -480 -256 -71 -24 -255 -91 -409 -149 -363 -136 -492 -177 -590 -187 -271 -29 -916 -169 -1205 -262 -166 -53 -442 -159 -525 -200 -605 -302 -1231 -910 -1610 -1563 -32 -55 -66 -114 -76 -131 l-18 -30 131 -79 c151 -91 129 -96 205 45 113 209 310 463 558 718 365 377 899 744 1235 850 107 34 786 164 1101 211 249 38 413 78 686 169 467 156 774 299 1098 509 270 176 546 406 728 608 237 263 606 802 842 1230 126 228 178 310 316 496 212 285 432 539 695 804 158 159 257 247 444 393 l115 90 28 -62 c85 -184 138 -337 147 -418 5 -46 18 -119 29 -163 33 -128 46 -353 32 -558 -14 -213 -31 -321 -78 -499 -22 -84 -33 -146 -29 -162 7 -29 70 -76 102 -76 80 0 143 175 180 500 21 180 24 648 5 795 -29 234 -94 483 -178 683 -34 81 -35 83 -17 103 10 11 82 52 159 91 234 116 225 106 225 283 l0 111 -207 49 c-548 127 -674 191 -844 431 -247 347 -561 1103 -600 1442 -13 116 -5 398 16 557 16 118 33 161 160 390 56 103 66 143 40 165 -32 26 -67 15 -116 -38 -136 -148 -259 -566 -259 -882 0 -138 21 -245 95 -489 108 -356 230 -644 438 -1033 46 -87 82 -158 79 -158 -3 0 -107 49 -231 109 -317 153 -467 202 -724 236 -292 38 -473 4 -735 -136 -191 -101 -316 -196 -552 -414 -178 -164 -302 -270 -345 -293 -41 -22 -131 -21 -175 2 -133 70 -278 279 -394 572 -92 231 -187 685 -260 1234 -15 107 -31 220 -37 250 -78 419 -272 721 -569 888 -30 17 -120 56 -200 87 -80 31 -196 79 -259 107 -79 35 -140 55 -200 64 -65 11 -307 17 -1011 24 -1128 11 -1407 20 -2330 75 -665 40 -866 65 -1287 160 -167 38 -243 44 -263 20z"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="stap-connector reveal"><div class="stap-connector-dot"></div></div>
+
+  <!-- STAP 4 -->
+  <div class="stap-groot">
+    <div class="stap-visueel-blok">
+      <div class="stap-nummer-groot">04</div>
+      <div class="stap-icoon-groot">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 28S7 21.5 7 13.5a6 6 0 0 1 12-1 6 6 0 0 1 12 1c0 8-13 14.5-13 14.5z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="stap-tekst-blok reveal reveal-right">
+      <div class="stap-label">Stap 04</div>
+      <h2 class="stap-titel-groot">Het <em>magische</em> moment</h2>
+      <p class="stap-tekst-groot">
+        Het moment is aangebroken. U en uw partner openen samen de mand. De duiven stijgen op en verdwijnen in de hemel terwijl uw gasten in stilte toekijken — een moment dat niemand ooit vergeet.
+      </p>
+      <p class="stap-tekst-groot">
+        Onze begeleider staat naast u voor elke ondersteuning die u nodig heeft, zodat u volledig kunt opgaan in dit unieke, kostbare moment.
+      </p>
+      <ul class="stap-detail-list">
+        <li>Begeleider staat u bij tijdens het loslaten</li>
+        <li>Vluchttijd varieert per pakket: 15 tot 30 minuten</li>
+        <li>Duiven keren veilig thuis terug na de vlucht</li>
+        <li>Fotoservice- en videomoment inbegrepen bij Harmonie &amp; Grandeur</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<!-- EINDE STAPPEN -->
+
+<!-- WAT WIJ GARANDEREN -->
+<section class="section" style="background:var(--achtergrond);">
+  <div class="section-inner">
+    <span class="section-label reveal">Onze belofte</span>
+    <h2 class="section-title reveal">Wat u van ons <em>mag verwachten</em></h2>
+    <div class="divider-goud reveal"></div>
+    <div class="garanties-grid stagger-children">
+
+      <div class="garantie-item">
+        <div class="garantie-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M8 11l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="garantie-tekst">
+          <h4>Altijd op tijd</h4>
+          <p>Wij arriveren minimaal 30 minuten voor het geplande moment. Punctualiteit is bij ons geen optie — het is een standaard.</p>
+        </div>
+      </div>
+
+      <div class="garantie-item">
+        <div class="garantie-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 19S3 14 3 8a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11z"/>
+          </svg>
+        </div>
+        <div class="garantie-tekst">
+          <h4>Dierenwelzijn voorop</h4>
+          <p>Onze duiven zijn gezond, getraind en geliefd. Ze worden nooit in het wild achtergelaten en keren altijd veilig naar huis terug.</p>
+        </div>
+      </div>
+
+      <div class="garantie-item">
+        <div class="garantie-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 11l4-4 4 4 4-4 4 4"/>
+            <path d="M3 17l4-4 4 4 4-4 4 4"/>
+          </svg>
+        </div>
+        <div class="garantie-tekst">
+          <h4>Weersalternatief</h4>
+          <p>Bij storm of hevige regen zoeken wij samen naar een alternatief moment of bieden wij volledige terugbetaling aan. U zit nooit vast.</p>
+        </div>
+      </div>
+
+      <div class="garantie-item">
+        <div class="garantie-icoon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 3L9 8.5H3.5l4.5 3.3-1.8 5.7L11 14l4.8 3.5-1.8-5.7 4.5-3.3H13z"/>
+          </svg>
+        </div>
+        <div class="garantie-tekst">
+          <h4>Persoonlijke aandacht</h4>
+          <p>Elk bruidspaar verdient volledige toewijding. Wij accepteren op uw datum geen andere boekingen — u heeft onze volledige focus.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXTRA DETAIL CARDS (donker) -->
+<section class="detail-bg">
+  <div style="max-width:1100px;margin:0 auto;">
+    <span class="section-label reveal" style="color:rgba(201,168,76,0.7);display:block;text-align:center;">Praktisch</span>
+    <h2 class="pakketten-titel reveal" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,4vw,3rem);color:var(--goud);text-align:center;margin-bottom:0.5rem;">Handige details</h2>
+    <p class="reveal" style="font-size:0.85rem;color:rgba(201,168,76,0.5);text-align:center;margin-bottom:0;font-weight:300;">Alles wat u nog wilt weten over onze werkwijze</p>
+    <div class="detail-grid stagger-children">
+
+      <div class="detail-card">
+        <div class="detail-nr">01</div>
+        <div class="detail-titel">Reserveer op tijd</div>
+        <p class="detail-tekst">In het voorjaar en de zomer is de vraag naar trouwduiven groot. Wij raden aan minimaal 3 maanden van tevoren te reserveren om teleurstellingen te voorkomen.</p>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-nr">02</div>
+        <div class="detail-titel">Locatie & bereikbaarheid</div>
+        <p class="detail-tekst">Wij zijn actief door heel Nederland en de Vlaamse provincies van België. Buiten een bepaalde reisradius kan een kleine reisvergoeding van toepassing zijn.</p>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-nr">03</div>
+        <div class="detail-titel">Betaling & annulering</div>
+        <p class="detail-tekst">U betaalt een aanbetaling bij boeking en het restbedrag één week voor de trouwdatum. Bij annulering meer dan 6 weken voor de datum ontvangt u de aanbetaling volledig terug.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner reveal reveal-scale">
+  <h2>Klaar om te beginnen?</h2>
+  <p>Neem vandaag nog contact op en maak uw trouwdag compleet met een onvergetelijk moment.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;">
+    <a href="/reserveren" class="btn-primary">Reserveren</a>
+    <a href="/pakketten" class="btn-outline">Bekijk pakketten</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <span class="naam">Veloria</span>
+        <p>Wij brengen magie en symboliek op uw mooiste dag. Witte duiven als eeuwig symbool van liefde, vrede en een nieuw begin samen.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigatie</h4>
+        <ul>
+          <li><a href="../over-ons">Over ons</a></li>
+          <li><a href="../pakketten">Pakketten</a></li>
+          <li><a href="../werkwijze">Werkwijze</a></li>
+          <li><a href="../faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Pakketten</h4>
+        <ul>
+          <li><a href="../pakketten#romantiek">Romantiek – €149</a></li>
+          <li><a href="../pakketten#harmonie">Harmonie – €289</a></li>
+          <li><a href="../pakketten#grandeur">Grandeur – €449</a></li>
+          <li><a href="../reserveren">Op maat</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@veloria.nl">info@veloria.nl</a></li>
+          <li><a href="tel:+31612345678">+31 6 12 34 56 78</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Veloria – Trouwduiven. Alle rechten voorbehouden.</p>
+      <p class="footer-made-by">Website gemaakt door <a href="https://titanpulse.nl" target="_blank" rel="noopener">TitanPulse</a></p>
+      <div class="footer-social">
+        <a href="../privacy">Privacy</a>
+        <a href="../algemene-voorwaarden">Algemene voorwaarden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Particles in hero
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1.5;
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      bottom: -10px;
+      width: ${size}px;
+      height: ${size}px;
+      --dx: ${(Math.random() - 0.5) * 120}px;
+      animation-duration: ${6 + Math.random() * 10}s;
+      animation-delay: ${Math.random() * 8}s;
+    `;
+    container.appendChild(p);
+  }
+
+  // Header scroll shadow
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Intersection observer for reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal, .stagger-children').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

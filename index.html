@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veloria – Trouwduiven</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --groen: #1a3a2a;
+    --groen-licht: #2a5040;
+    --goud: #c9a84c;
+    --goud-licht: #e8c96a;
+    --goud-pale: #f5e6b8;
+    --wit: #ffffff;
+    --zwart: #1a1a1a;
+    --tekst-grijs: #3a3a3a;
+    --achtergrond: #fafaf8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--zwart);
+    background: var(--achtergrond);
+  }
+
+  /* ─── SEASONS FONT SIMULATIE via Cormorant ─── */
+  .veloria-naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--groen);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+  }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 52px;
+    width: auto;
+    filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .logo-text .naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--goud);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .logo-text .tagline {
+    font-size: 0.65rem;
+    color: rgba(201,168,76,0.7);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--goud);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--goud);
+    color: var(--goud) !important;
+    padding: 8px 20px;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s !important;
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .nav-btn:hover {
+    background: var(--goud) !important;
+    color: var(--groen) !important;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--groen);
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-ornament {
+    position: absolute;
+    opacity: 0.04;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28rem;
+    color: var(--goud);
+    user-select: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+  }
+
+  .hero-logo {
+    width: 140px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 4px 24px rgba(201,168,76,0.35));
+    animation: floatUp 1s ease both;
+  }
+
+  .hero-subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--goud);
+    opacity: 0.8;
+    margin-bottom: 1.2rem;
+    animation: floatUp 1s 0.15s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    color: var(--goud);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    animation: floatUp 1s 0.25s ease both;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: rgba(201,168,76,0.7);
+    font-weight: 300;
+    line-height: 1.9;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    animation: floatUp 1s 0.35s ease both;
+  }
+
+  .hero-cta-wrap {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: floatUp 1s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background: var(--goud);
+    color: var(--groen);
+    border: none;
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: var(--goud-licht);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--goud);
+    border: 1px solid rgba(201,168,76,0.5);
+    padding: 14px 36px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--goud);
+    color: var(--goud-licht);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(201,168,76,0.4);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ─── OVER SECTIE ─── */
+  .section {
+    padding: 6rem 2rem;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--groen);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--goud);
+  }
+
+  .divider-goud {
+    width: 60px;
+    height: 1px;
+    background: var(--goud);
+    margin-bottom: 2rem;
+    opacity: 0.6;
+  }
+
+  /* ─── OVER ─── */
+  .over-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .over-tekst p {
+    font-size: 1rem;
+    color: var(--tekst-grijs);
+    line-height: 1.9;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+
+  .over-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .over-cirkel {
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: var(--groen);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .over-cirkel::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+
+  .over-cirkel::after {
+    content: '';
+    position: absolute;
+    inset: -24px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .over-cirkel img {
+    width: 200px;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.3));
+  }
+
+  /* ─── PAKKETTEN ─── */
+  .pakketten-bg {
+    background: var(--groen);
+    padding: 6rem 2rem;
+  }
+
+  .pakketten-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.7);
+    margin-bottom: 0.8rem;
+    display: block;
+    text-align: center;
+  }
+
+  .pakketten-titel {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--goud);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .pakketten-onder {
+    font-size: 0.9rem;
+    color: rgba(201,168,76,0.55);
+    text-align: center;
+    margin-bottom: 3.5rem;
+    font-weight: 300;
+  }
+
+  .pakketten-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .pakket-card {
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    transition: border-color 0.3s, transform 0.2s;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .pakket-card:hover {
+    border-color: rgba(201,168,76,0.55);
+    transform: translateY(-4px);
+  }
+
+  .pakket-card.featured {
+    border-color: var(--goud);
+    background: rgba(201,168,76,0.06);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--goud);
+    color: var(--groen);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .pakket-naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--goud);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .pakket-duiven {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 1.5rem;
+  }
+
+  .pakket-prijs {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--goud);
+    line-height: 1;
+  }
+
+  .pakket-prijs sup {
+    font-size: 1.2rem;
+    vertical-align: top;
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+
+  .pakket-periode {
+    font-size: 0.75rem;
+    color: rgba(201,168,76,0.45);
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  .pakket-hr {
+    border: none;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    margin-bottom: 1.8rem;
+  }
+
+  .pakket-features {
+    list-style: none;
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .pakket-features li {
+    color: rgba(201,168,76,0.75);
+    font-size: 0.85rem;
+    font-weight: 300;
+    padding: 5px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .pakket-features li::before {
+    content: '✦';
+    color: var(--goud);
+    font-size: 0.55rem;
+    margin-top: 4px;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .btn-pakket {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(201,168,76,0.45);
+    background: transparent;
+    color: var(--goud);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-pakket:hover, .btn-pakket.featured-btn {
+    background: var(--goud);
+    color: var(--groen);
+    border-color: var(--goud);
+  }
+
+  /* ─── HOE HET WERKT ─── */
+  .stappen-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .stap {
+    text-align: center;
+  }
+
+  .stap-nummer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--goud);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .stap-icoon {
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.4rem;
+  }
+
+  .stap-titel {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--groen);
+    margin-bottom: 0.5rem;
+  }
+
+  .stap-tekst {
+    font-size: 0.85rem;
+    color: var(--tekst-grijs);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .getuigenissen-bg {
+    background: var(--groen);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+
+  .getuigenissen-grid {
+    max-width: 1000px;
+    margin: 3rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .getuigenis {
+    border: 1px solid rgba(201,168,76,0.18);
+    padding: 2rem 1.5rem;
+    text-align: left;
+  }
+
+  .sterren {
+    color: var(--goud);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .getuigenis-tekst {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(201,168,76,0.75);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+
+  .getuigenis-naam {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.45);
+  }
+
+  /* ─── FAQ ─── */
+  .faq-list {
+    max-width: 700px;
+    margin-top: 3rem;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .faq-vraag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--zwart);
+    font-weight: 400;
+    list-style: none;
+    gap: 1rem;
+  }
+
+  .faq-vraag::-webkit-details-marker { display: none; }
+
+  .faq-vraag::after {
+    content: '+';
+    color: var(--goud);
+    font-size: 1.2rem;
+    font-weight: 300;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  details[open] .faq-vraag::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-antwoord {
+    font-size: 0.88rem;
+    color: var(--tekst-grijs);
+    line-height: 1.8;
+    font-weight: 300;
+    padding-bottom: 1.2rem;
+  }
+
+  /* ─── CTA BANNER ─── */
+  .cta-banner {
+    background: var(--groen);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--goud);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cta-banner p {
+    color: rgba(201,168,76,0.6);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    font-size: 0.95rem;
+    position: relative;
+  }
+
+  .cta-banner .btn-primary { position: relative; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--groen);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 3rem 2rem 2rem;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-logo .naam {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--goud);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .footer-logo p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 240px;
+  }
+
+  .footer-col h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--goud);
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-col ul li a {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul li a:hover {
+    color: rgba(255,255,255,0.85);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    font-weight: 300;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer-social a {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-social a:hover {
+    color: rgba(201,168,76,0.8);
+  }
+
+  /* ─── ANIMATIES ─── */
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .over-grid { grid-template-columns: 1fr; }
+    .over-visual { order: -1; }
+    .pakketten-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+    .stappen-grid { grid-template-columns: repeat(2, 1fr); }
+    .getuigenissen-grid { grid-template-columns: 1fr; max-width: 400px; margin: 3rem auto 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .stappen-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <a href="#" class="logo-wrap">
+      <img src="/mnt/user-data/uploads/Schermafbeelding_2026-05-29_222930-removebg-preview.png" alt="Veloria logo" class="logo-img">
+      <div class="logo-text">
+        <span class="naam">Veloria</span>
+        <span class="tagline">Trouwduiven</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#over">Over ons</a></li>
+      <li><a href="#pakketten">Pakketten</a></li>
+      <li><a href="#werkwijze">Werkwijze</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact" class="nav-btn">Reserveren</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ornament">V</div>
+  <div class="hero-inner">
+    <img src="/mnt/user-data/uploads/Schermafbeelding_2026-05-29_222930-removebg-preview.png" alt="Veloria duif" class="hero-logo">
+    <p class="hero-subtitle">Uw perfecte huwelijksmoment</p>
+    <h1 class="hero-title">Veloria</h1>
+    <p class="hero-desc">
+      Laat uw liefde opstijgen met een onvergetelijk moment van zuivere magie — 
+      witte duiven die de hemel invliegen als symbool van vrede, liefde en een prachtig nieuw begin.
+    </p>
+    <div class="hero-cta-wrap">
+      <a href="#pakketten" class="btn-primary">Bekijk pakketten</a>
+      <a href="#over" class="btn-outline">Meer ontdekken</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- OVER ONS -->
+<section class="section" id="over">
+  <div class="section-inner">
+    <div class="over-grid">
+      <div class="over-tekst">
+        <span class="section-label">Over Veloria</span>
+        <h2 class="section-title">Een vlucht van <em>liefde</em> op uw trouwdag</h2>
+        <div class="divider-goud"></div>
+        <p>
+          Bij Veloria geloven wij dat elk huwelijk een uniek verhaal vertelt. Wij bieden u de kans om dat verhaal te bekronen met een moment dat uw gasten nooit zullen vergeten: het vrijlaten van witte duiven als symbool van eeuwige liefde.
+        </p>
+        <p>
+          Onze duiven zijn zorgvuldig getraind en worden behandeld met de grootste zorg en liefde. Ze worden gebracht in sfeervolle manden en na het vrijlaten keren ze veilig terug naar hun thuis.
+        </p>
+        <p>
+          Met meer dan tien jaar ervaring in het begeleiden van trouwen en bruidsparen weten wij precies hoe wij dit moment voor u onvergetelijk kunnen maken.
+        </p>
+      </div>
+      <div class="over-visual">
+        <div class="over-cirkel">
+          <img src="/mnt/user-data/uploads/Schermafbeelding_2026-05-29_222930-removebg-preview.png" alt="Veloria logo">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAKKETTEN -->
+<section class="pakketten-bg" id="pakketten">
+  <span class="pakketten-label">Onze diensten</span>
+  <h2 class="pakketten-titel">Kies uw droommoment</h2>
+  <p class="pakketten-onder">Elk pakket is met liefde samengesteld voor uw grote dag</p>
+
+  <div class="pakketten-grid">
+
+    <div class="pakket-card">
+      <div class="pakket-naam">Romantiek</div>
+      <div class="pakket-duiven">2 Duiven · Paar</div>
+      <div class="pakket-prijs"><sup>€</sup>149</div>
+      <div class="pakket-periode">per reservering</div>
+      <hr class="pakket-hr">
+      <ul class="pakket-features">
+        <li>2 witte trouwduiven</li>
+        <li>Sierlijke houten mand</li>
+        <li>Begeleiding ter plaatse</li>
+        <li>Vluchttijd ca. 15 minuten</li>
+        <li>Gratis consult vooraf</li>
+      </ul>
+      <a href="#contact" class="btn-pakket">Reserveren</a>
+    </div>
+
+    <div class="pakket-card featured">
+      <div class="featured-badge">Meest gekozen</div>
+      <div class="pakket-naam">Harmonie</div>
+      <div class="pakket-duiven">6 Duiven · Familie</div>
+      <div class="pakket-prijs"><sup>€</sup>289</div>
+      <div class="pakket-periode">per reservering</div>
+      <hr class="pakket-hr">
+      <ul class="pakket-features">
+        <li>6 witte trouwduiven</li>
+        <li>Exclusieve vlechtmand met bloemen</li>
+        <li>Professionele begeleiding</li>
+        <li>Vluchttijd ca. 20 minuten</li>
+        <li>Gratis consult &amp; proefvlucht</li>
+        <li>Fotoservice moment inbegrepen</li>
+      </ul>
+      <a href="#contact" class="btn-pakket featured-btn">Reserveren</a>
+    </div>
+
+    <div class="pakket-card">
+      <div class="pakket-naam">Grandeur</div>
+      <div class="pakket-duiven">12 Duiven · Spektakel</div>
+      <div class="pakket-prijs"><sup>€</sup>449</div>
+      <div class="pakket-periode">per reservering</div>
+      <hr class="pakket-hr">
+      <ul class="pakket-features">
+        <li>12 witte trouwduiven</li>
+        <li>Twee luxe decoratiemanden</li>
+        <li>Volledige ceremoniebegeleiding</li>
+        <li>Vluchttijd ca. 30 minuten</li>
+        <li>Persoonlijke coördinatie</li>
+        <li>Fotoservice &amp; videomoment</li>
+        <li>Gedicht of tekst op verzoek</li>
+      </ul>
+      <a href="#contact" class="btn-pakket">Reserveren</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOE HET WERKT -->
+<section class="section" id="werkwijze">
+  <div class="section-inner">
+    <span class="section-label">Werkwijze</span>
+    <h2 class="section-title">Van droom tot <em>vlucht</em></h2>
+    <div class="divider-goud"></div>
+    <div class="stappen-grid">
+      <div class="stap">
+        <div class="stap-nummer">01</div>
+        <div class="stap-icoon">📞</div>
+        <div class="stap-titel">Vrijblijvend contact</div>
+        <p class="stap-tekst">Neem contact op en vertel ons over uw trouwdag. Samen bespreken wij uw wensen en de perfecte locatie.</p>
+      </div>
+      <div class="stap">
+        <div class="stap-nummer">02</div>
+        <div class="stap-icoon">📋</div>
+        <div class="stap-titel">Persoonlijk plan</div>
+        <p class="stap-tekst">Wij stellen een op maat gemaakt plan op voor het moment van loslaten, afgestemd op uw ceremonie.</p>
+      </div>
+      <div class="stap">
+        <div class="stap-nummer">03</div>
+        <div class="stap-icoon">🕊️</div>
+        <div class="stap-titel">De grote dag</div>
+        <p class="stap-tekst">Onze begeleider arriveert op tijd met de duiven in sfeervolle manden, klaar voor uw onvergetelijk moment.</p>
+      </div>
+      <div class="stap">
+        <div class="stap-nummer">04</div>
+        <div class="stap-icoon">✨</div>
+        <div class="stap-titel">Magisch moment</div>
+        <p class="stap-tekst">De duiven stijgen op terwijl u samen staat — een moment van pure magie dat u uw leven lang bijblijft.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="getuigenissen-bg">
+  <span class="pakketten-label">Ervaringen</span>
+  <h2 class="pakketten-titel">Wat bruidsparen zeggen</h2>
+  <div class="getuigenissen-grid">
+    <div class="getuigenis">
+      <div class="sterren">★★★★★</div>
+      <p class="getuigenis-tekst">"Het moment dat de duiven opstegen was zo ontroerend mooi. Onze gasten waren volledig stil. Dit was het hoogtepunt van onze trouwdag."</p>
+      <div class="getuigenis-naam">— Sophie &amp; Daan, Juni 2025</div>
+    </div>
+    <div class="getuigenis">
+      <div class="sterren">★★★★★</div>
+      <p class="getuigenis-tekst">"Veloria heeft alles perfect geregeld. De begeleiding was professioneel, de duiven prachtig. Een onvergetelijke herinnering aan onze mooiste dag."</p>
+      <div class="getuigenis-naam">— Lisa &amp; Mark, September 2025</div>
+    </div>
+    <div class="getuigenis">
+      <div class="sterren">★★★★★</div>
+      <p class="getuigenis-tekst">"We kozen het Grandeur pakket en het overtrof al onze verwachtingen. Elk detail klopte. Puur genieten!"</p>
+      <div class="getuigenis-naam">— Emma &amp; Tom, Mei 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <span class="section-label">Veelgestelde vragen</span>
+    <h2 class="section-title">Alles wat u wilt <em>weten</em></h2>
+    <div class="divider-goud"></div>
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary class="faq-vraag">Zijn de duiven veilig na het vrijlaten?</summary>
+        <p class="faq-antwoord">Ja, absoluut. Al onze duiven zijn thuisduiven met een sterk terugkeerinstinct. Na het vrijlaten vliegen zij veilig terug naar hun vaste verblijf. Ze worden niet in het wild achtergelaten.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-vraag">Hoe vroeg op voorhand moet ik reserveren?</summary>
+        <p class="faq-antwoord">Wij raden aan minimaal 3 maanden voor uw trouwdatum te reserveren, zeker in het voorjaar en de zomer wanneer de vraag groot is. Neem gerust contact op voor beschikbaarheid.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-vraag">Wat bij slecht weer?</summary>
+        <p class="faq-antwoord">Bij storm of hevige regen is het niet verantwoord om duiven vrij te laten. In dat geval zoeken wij samen naar een alternatief moment of bieden wij een volledige terugbetaling aan.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-vraag">Kan ik zelf de duiven loslaten?</summary>
+        <p class="faq-antwoord">Ja! Dat is zelfs de bedoeling. Onze begeleider staat u bij en leidt u door het moment. U en uw partner openen samen de mand — een symbolisch en emotioneel hoogtepunt van de ceremonie.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-vraag">Reizen jullie door heel Nederland en België?</summary>
+        <p class="faq-antwoord">Wij zijn actief door heel Nederland en de Vlaamse provincies van België. Buiten een bepaalde reisradius kan een kleine reisvergoeding worden aangerekend. Vraag gerust na voor uw locatie.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" id="contact">
+  <h2>Klaar voor uw onvergetelijk moment?</h2>
+  <p>Reserveer uw trouwduiven vandaag nog en maak uw grote dag compleet.</p>
+  <a href="mailto:info@veloria.nl" class="btn-primary">Neem contact op</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <span class="naam">Veloria</span>
+        <p>Wij brengen magie en symboliek op uw mooiste dag. Witte duiven als eeuwig symbool van liefde, vrede en een nieuw begin samen.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigatie</h4>
+        <ul>
+          <li><a href="#over">Over ons</a></li>
+          <li><a href="#pakketten">Pakketten</a></li>
+          <li><a href="#werkwijze">Werkwijze</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Pakketten</h4>
+        <ul>
+          <li><a href="#pakketten">Romantiek – €149</a></li>
+          <li><a href="#pakketten">Harmonie – €289</a></li>
+          <li><a href="#pakketten">Grandeur – €449</a></li>
+          <li><a href="#contact">Op maat</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@veloria.nl">info@veloria.nl</a></li>
+          <li><a href="tel:+31612345678">+31 6 12 34 56 78</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Veloria – Trouwduiven. Alle rechten voorbehouden.</p>
+      <div class="footer-social">
+        <a href="#">Privacy</a>
+        <a href="#">Algemene voorwaarden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

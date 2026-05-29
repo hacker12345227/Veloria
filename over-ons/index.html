@@ -203,7 +203,6 @@
     animation: floatUp 0.9s 0.28s ease both;
   }
 
-  /* gouden lijn onder hero */
   .hero-lijn {
     width: 60px;
     height: 1px;
@@ -421,62 +420,6 @@
     font-weight: 300;
   }
 
-  /* ─── TEAM ─── */
-  .team-bg {
-    background: var(--groen);
-    padding: 6rem 2rem;
-  }
-  .team-grid {
-    max-width: 900px;
-    margin: 3rem auto 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem;
-  }
-  .team-card {
-    border: 1px solid rgba(201,168,76,0.18);
-    padding: 2.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-  .team-card:hover {
-    border-color: rgba(201,168,76,0.45);
-    transform: translateY(-4px);
-  }
-  .team-avatar {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(201,168,76,0.12);
-    border: 1px solid rgba(201,168,76,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .team-avatar svg { opacity: 0.8; }
-  .team-naam {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: var(--goud);
-    letter-spacing: 0.05em;
-  }
-  .team-rol {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(201,168,76,0.45);
-    margin-top: -0.8rem;
-  }
-  .team-bio {
-    font-size: 0.88rem;
-    color: rgba(201,168,76,0.65);
-    line-height: 1.8;
-    font-weight: 300;
-  }
-
   /* ─── CTA ─── */
   .cta-banner {
     background: var(--groen);
@@ -635,7 +578,6 @@
     .intro-grid { grid-template-columns: 1fr; }
     .intro-visual { order: -1; }
     .waarden-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-    .team-grid { grid-template-columns: 1fr; max-width: 420px; margin: 3rem auto 0; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
     .cirkel-wrap { width: 280px; height: 280px; }
@@ -652,18 +594,18 @@
 <header id="main-header">
   <nav>
     <a href="/" class="logo-wrap">
-      <img src="../logo.png" alt="Veloria logo" class="logo-img">
+      <img src="logo.png" alt="Veloria logo" class="logo-img">
       <div class="logo-text">
         <span class="naam">Veloria</span>
         <span class="tagline">Trouwduiven</span>
       </div>
     </a>
     <ul class="nav-links">
-      <li><a href="../over-ons" class="active">Over ons</a></li>
-      <li><a href="../pakketten">Pakketten</a></li>
-      <li><a href="../werkwijze">Werkwijze</a></li>
-      <li><a href="../faq">FAQ</a></li>
-      <li><a href="../reserveren" class="nav-btn">Reserveren</a></li>
+      <li><a href="/over-ons" class="active">Over ons</a></li>
+      <li><a href="/pakketten">Pakketten</a></li>
+      <li><a href="/werkwijze">Werkwijze</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/reserveren" class="nav-btn">Reserveren</a></li>
     </ul>
   </nav>
 </header>
@@ -691,7 +633,7 @@
       <div class="intro-visual reveal reveal-right">
         <div class="cirkel-wrap">
           <div class="cirkel-bg">
-            <img src="../logo.png" alt="Veloria logo">
+            <img src="logo.png" alt="Veloria logo">
           </div>
         </div>
       </div>
@@ -779,75 +721,6 @@
   </div>
 </section>
 
-<!-- TEAM -->
-<section class="team-bg">
-  <div style="max-width:1100px;margin:0 auto;">
-    <span class="section-label reveal" style="color:rgba(201,168,76,0.7);display:block;text-align:center;">De mensen achter Veloria</span>
-    <h2 class="waarden-titel reveal">Ons team</h2>
-    <p class="waarden-onder reveal">Klein van omvang, groot van hart</p>
-
-    <div class="team-grid stagger-children">
-
-      <div class="team-card">
-        <div class="team-avatar">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="16" cy="11" r="5"/>
-            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
-          </svg>
-        </div>
-        <div>
-          <div class="team-naam">Isabelle van der Berg</div>
-          <div class="team-rol">Oprichtster &amp; Hoofdbegeleider</div>
-        </div>
-        <p class="team-bio">Isabelle combineert tien jaar ervaring met een onuitputtelijke passie voor het creëren van onvergetelijke huwelijksmomenten. Zij is bij elke Grandeur-boeking persoonlijk aanwezig.</p>
-      </div>
-
-      <div class="team-card">
-        <div class="team-avatar">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="16" cy="11" r="5"/>
-            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
-          </svg>
-        </div>
-        <div>
-          <div class="team-naam">Thomas Mertens</div>
-          <div class="team-rol">Duivenverzorger &amp; Trainer</div>
-        </div>
-        <p class="team-bio">Thomas zorgt dagelijks voor het welzijn van onze duiven. Met zijn achtergrond in diergedrag en jaar­lang enthousiasme voor postduiven is hij de hoeksteen van ons team.</p>
-      </div>
-
-      <div class="team-card">
-        <div class="team-avatar">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="16" cy="11" r="5"/>
-            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
-          </svg>
-        </div>
-        <div>
-          <div class="team-naam">Sophie Janssen</div>
-          <div class="team-rol">Ceremoniebegeleider</div>
-        </div>
-        <p class="team-bio">Sophie begeleidt de Romantiek- en Harmonie-pakketten met een rustige, warme aanwezigheid. Ze zorgt ervoor dat het loslaten precies op het juiste moment plaatsvindt.</p>
-      </div>
-
-      <div class="team-card">
-        <div class="team-avatar">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#c9a84c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="16" cy="11" r="5"/>
-            <path d="M6 28c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
-          </svg>
-        </div>
-        <div>
-          <div class="team-naam">Lena De Smedt</div>
-          <div class="team-rol">Klantcontact &amp; Planning</div>
-        </div>
-        <p class="team-bio">Lena is uw eerste aanspreekpunt en regelt alles van reservering tot dag-coördinatie. Haar warmte en oog voor detail maken het planningsproces zo zorgeloos mogelijk.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- CTA -->
 <section class="cta-banner reveal">
   <h2>Klaar om kennis te maken?</h2>
@@ -869,10 +742,10 @@
       <div class="footer-col">
         <h4>Navigatie</h4>
         <ul>
-          <li><a href="../over-ons">Over ons</a></li>
-          <li><a href="../pakketten">Pakketten</a></li>
-          <li><a href="../werkwijze">Werkwijze</a></li>
-          <li><a href="../faq">FAQ</a></li>
+          <li><a href="/over-ons">Over ons</a></li>
+          <li><a href="/pakketten">Pakketten</a></li>
+          <li><a href="/werkwijze">Werkwijze</a></li>
+          <li><a href="/faq">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -905,13 +778,11 @@
 </footer>
 
 <script>
-  // Header shadow
   const header = document.getElementById('main-header');
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
 
-  // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

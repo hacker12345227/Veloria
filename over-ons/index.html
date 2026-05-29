@@ -559,6 +559,18 @@
   }
   .footer-social a:hover { color: rgba(201,168,76,0.8); }
 
+  .footer-made-by {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    font-weight: 300;
+  }
+  .footer-made-by a {
+    color: rgba(201,168,76,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-made-by a:hover { color: var(--goud); }
+
   /* ─── ANIMATIES ─── */
   @keyframes floatUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -769,6 +781,7 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 Veloria – Trouwduiven. Alle rechten voorbehouden.</p>
+      <p class="footer-made-by">Website gemaakt door <a href="https://titanpulse.nl" target="_blank" rel="noopener">TitanPulse</a></p>
       <div class="footer-social">
         <a href="../privacy">Privacy</a>
         <a href="../algemene-voorwaarden">Algemene voorwaarden</a>

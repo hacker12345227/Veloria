@@ -26,13 +26,42 @@
     font-family: 'Jost', sans-serif;
     color: var(--zwart);
     background: var(--achtergrond);
+    overflow-x: hidden;
   }
 
-  /* ─── SEASONS FONT SIMULATIE via Cormorant ─── */
-  .veloria-naam {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    letter-spacing: 0.18em;
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.reveal-left {
+    transform: translateX(-50px);
+  }
+  .reveal.reveal-right {
+    transform: translateX(50px);
+  }
+  .reveal.reveal-scale {
+    transform: scale(0.92);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* stagger children */
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .stagger-children.visible > *:nth-child(1) { transition-delay: 0s; }
+  .stagger-children.visible > *:nth-child(2) { transition-delay: 0.12s; }
+  .stagger-children.visible > *:nth-child(3) { transition-delay: 0.24s; }
+  .stagger-children.visible > *:nth-child(4) { transition-delay: 0.36s; }
+  .stagger-children.visible > * {
+    opacity: 1;
+    transform: none;
   }
 
   /* ─── HEADER ─── */
@@ -43,6 +72,10 @@
     top: 0;
     z-index: 100;
     border-bottom: 1px solid rgba(201,168,76,0.3);
+    transition: box-shadow 0.3s;
+  }
+  header.scrolled {
+    box-shadow: 0 4px 40px rgba(0,0,0,0.35);
   }
 
   nav {
@@ -65,7 +98,9 @@
     height: 52px;
     width: auto;
     filter: drop-shadow(0 0 8px rgba(201,168,76,0.4));
+    transition: transform 0.3s ease;
   }
+  .logo-wrap:hover .logo-img { transform: rotate(-5deg) scale(1.08); }
 
   .logo-text {
     display: flex;
@@ -106,8 +141,19 @@
     font-weight: 400;
     opacity: 0.85;
     transition: opacity 0.2s;
+    position: relative;
   }
-
+  .nav-links a:not(.nav-btn)::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--goud);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:not(.nav-btn):hover::after { width: 100%; }
   .nav-links a:hover { opacity: 1; }
 
   .nav-btn {
@@ -118,11 +164,10 @@
     font-size: 0.72rem !important;
     letter-spacing: 0.2em;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s !important;
+    transition: background 0.25s, color 0.25s !important;
     font-family: 'Jost', sans-serif;
     text-transform: uppercase;
   }
-
   .nav-btn:hover {
     background: var(--goud) !important;
     color: var(--groen) !important;
@@ -149,6 +194,29 @@
     pointer-events: none;
   }
 
+  /* Floating particles */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(201,168,76,0.4);
+    border-radius: 50%;
+    animation: drift linear infinite;
+  }
+
+  @keyframes drift {
+    0%   { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(-20px) translateX(var(--dx)) scale(1.5); opacity: 0; }
+  }
+
   .hero-ornament {
     position: absolute;
     opacity: 0.04;
@@ -161,6 +229,12 @@
     transform: translate(-50%, -50%);
     pointer-events: none;
     letter-spacing: -0.05em;
+    animation: slowPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes slowPulse {
+    0%, 100% { opacity: 0.04; transform: translate(-50%,-50%) scale(1); }
+    50%       { opacity: 0.065; transform: translate(-50%,-50%) scale(1.04); }
   }
 
   .hero-inner {
@@ -174,7 +248,16 @@
     height: auto;
     margin-bottom: 2rem;
     filter: drop-shadow(0 4px 24px rgba(201,168,76,0.35));
-    animation: floatUp 1s ease both;
+    animation: heroLogoIn 1.2s cubic-bezier(0.22,1,0.36,1) both, floatLogo 6s ease-in-out 1.2s infinite;
+  }
+
+  @keyframes heroLogoIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.88); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
   }
 
   .hero-subtitle {
@@ -182,9 +265,9 @@
     letter-spacing: 0.5em;
     text-transform: uppercase;
     color: var(--goud);
-    opacity: 0.8;
+    opacity: 0;
     margin-bottom: 1.2rem;
-    animation: floatUp 1s 0.15s ease both;
+    animation: floatUp 1s 0.4s ease forwards;
   }
 
   .hero-title {
@@ -196,7 +279,8 @@
     text-transform: uppercase;
     line-height: 1;
     margin-bottom: 1.5rem;
-    animation: floatUp 1s 0.25s ease both;
+    opacity: 0;
+    animation: floatUp 1s 0.55s ease forwards;
   }
 
   .hero-desc {
@@ -206,7 +290,8 @@
     line-height: 1.9;
     max-width: 480px;
     margin: 0 auto 2.5rem;
-    animation: floatUp 1s 0.35s ease both;
+    opacity: 0;
+    animation: floatUp 1s 0.7s ease forwards;
   }
 
   .hero-cta-wrap {
@@ -214,7 +299,8 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    animation: floatUp 1s 0.45s ease both;
+    opacity: 0;
+    animation: floatUp 1s 0.85s ease forwards;
   }
 
   .btn-primary {
@@ -230,13 +316,23 @@
     font-weight: 500;
     text-decoration: none;
     display: inline-block;
-    transition: background 0.2s, transform 0.15s;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
   }
-
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
   .btn-primary:hover {
     background: var(--goud-licht);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.35);
   }
+  .btn-primary:active { transform: translateY(0); }
 
   .btn-outline {
     background: transparent;
@@ -251,12 +347,12 @@
     font-weight: 400;
     text-decoration: none;
     display: inline-block;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
   }
-
   .btn-outline:hover {
     border-color: var(--goud);
     color: var(--goud-licht);
+    transform: translateY(-2px);
   }
 
   .scroll-indicator {
@@ -272,19 +368,19 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    opacity: 0;
+    animation: floatUp 1s 1.2s ease forwards;
   }
 
   .scroll-line {
     width: 1px;
     height: 40px;
     background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);
-    animation: scrollPulse 2s infinite;
+    animation: scrollPulse 2s 1.4s infinite;
   }
 
-  /* ─── OVER SECTIE ─── */
-  .section {
-    padding: 6rem 2rem;
-  }
+  /* ─── SECTIONS ─── */
+  .section { padding: 6rem 2rem; }
 
   .section-inner {
     max-width: 1100px;
@@ -308,11 +404,7 @@
     line-height: 1.2;
     margin-bottom: 1.5rem;
   }
-
-  .section-title em {
-    font-style: italic;
-    color: var(--goud);
-  }
+  .section-title em { font-style: italic; color: var(--goud); }
 
   .divider-goud {
     width: 60px;
@@ -320,7 +412,10 @@
     background: var(--goud);
     margin-bottom: 2rem;
     opacity: 0.6;
+    transition: width 1s ease;
   }
+  .reveal.visible .divider-goud,
+  .visible.divider-goud { width: 120px; }
 
   /* ─── OVER ─── */
   .over-grid {
@@ -354,7 +449,9 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    transition: transform 0.4s ease;
   }
+  .over-cirkel:hover { transform: scale(1.03); }
 
   .over-cirkel::before {
     content: '';
@@ -362,19 +459,25 @@
     inset: -12px;
     border-radius: 50%;
     border: 1px solid rgba(201,168,76,0.25);
+    animation: ringPulse 4s ease-in-out infinite;
   }
-
   .over-cirkel::after {
     content: '';
     position: absolute;
     inset: -24px;
     border-radius: 50%;
     border: 1px solid rgba(201,168,76,0.1);
+    animation: ringPulse 4s 1s ease-in-out infinite;
+  }
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.04); opacity: 0.6; }
   }
 
   .over-cirkel img {
     width: 200px;
     filter: drop-shadow(0 0 20px rgba(201,168,76,0.3));
+    animation: floatLogo 6s ease-in-out infinite;
   }
 
   /* ─── PAKKETTEN ─── */
@@ -423,15 +526,16 @@
     padding: 2.5rem 2rem;
     text-align: center;
     position: relative;
-    transition: border-color 0.3s, transform 0.2s;
+    transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s, background 0.35s;
     background: rgba(255,255,255,0.02);
+    cursor: pointer;
   }
-
   .pakket-card:hover {
-    border-color: rgba(201,168,76,0.55);
-    transform: translateY(-4px);
+    border-color: rgba(201,168,76,0.6);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    background: rgba(201,168,76,0.04);
   }
-
   .pakket-card.featured {
     border-color: var(--goud);
     background: rgba(201,168,76,0.06);
@@ -476,7 +580,6 @@
     color: var(--goud);
     line-height: 1;
   }
-
   .pakket-prijs sup {
     font-size: 1.2rem;
     vertical-align: top;
@@ -502,7 +605,6 @@
     margin-bottom: 2rem;
     text-align: left;
   }
-
   .pakket-features li {
     color: rgba(201,168,76,0.75);
     font-size: 0.85rem;
@@ -513,7 +615,6 @@
     gap: 8px;
     line-height: 1.5;
   }
-
   .pakket-features li::before {
     content: '✦';
     color: var(--goud);
@@ -535,17 +636,16 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s;
     text-decoration: none;
   }
-
   .btn-pakket:hover, .btn-pakket.featured-btn {
     background: var(--goud);
     color: var(--groen);
     border-color: var(--goud);
   }
 
-  /* ─── HOE HET WERKT ─── */
+  /* ─── STAPPEN ─── */
   .stappen-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -553,9 +653,7 @@
     margin-top: 3.5rem;
   }
 
-  .stap {
-    text-align: center;
-  }
+  .stap { text-align: center; }
 
   .stap-nummer {
     font-family: 'Cormorant Garamond', serif;
@@ -565,7 +663,9 @@
     opacity: 0.25;
     line-height: 1;
     margin-bottom: 1rem;
+    transition: opacity 0.4s;
   }
+  .stap:hover .stap-nummer { opacity: 0.6; }
 
   .stap-icoon {
     width: 56px;
@@ -577,6 +677,12 @@
     justify-content: center;
     margin: 0 auto 1rem;
     font-size: 1.4rem;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  }
+  .stap:hover .stap-icoon {
+    border-color: var(--goud);
+    transform: scale(1.12) rotate(5deg);
+    background: rgba(201,168,76,0.08);
   }
 
   .stap-titel {
@@ -613,6 +719,12 @@
     border: 1px solid rgba(201,168,76,0.18);
     padding: 2rem 1.5rem;
     text-align: left;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+  }
+  .getuigenis:hover {
+    border-color: rgba(201,168,76,0.45);
+    transform: translateY(-5px);
+    background: rgba(201,168,76,0.04);
   }
 
   .sterren {
@@ -660,22 +772,19 @@
     font-weight: 400;
     list-style: none;
     gap: 1rem;
+    transition: color 0.2s;
   }
-
+  .faq-vraag:hover { color: #2a5040; }
   .faq-vraag::-webkit-details-marker { display: none; }
-
   .faq-vraag::after {
     content: '+';
     color: var(--goud);
     font-size: 1.2rem;
     font-weight: 300;
     flex-shrink: 0;
-    transition: transform 0.2s;
+    transition: transform 0.3s ease;
   }
-
-  details[open] .faq-vraag::after {
-    transform: rotate(45deg);
-  }
+  details[open] .faq-vraag::after { transform: rotate(45deg); }
 
   .faq-antwoord {
     font-size: 0.88rem;
@@ -683,6 +792,11 @@
     line-height: 1.8;
     font-weight: 300;
     padding-bottom: 1.2rem;
+    animation: faqOpen 0.35s ease;
+  }
+  @keyframes faqOpen {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   /* ─── CTA BANNER ─── */
@@ -693,7 +807,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .cta-banner::before {
     content: '';
     position: absolute;
@@ -701,7 +814,6 @@
     background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
     pointer-events: none;
   }
-
   .cta-banner h2 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
@@ -710,7 +822,6 @@
     margin-bottom: 1rem;
     position: relative;
   }
-
   .cta-banner p {
     color: rgba(201,168,76,0.6);
     margin-bottom: 2.5rem;
@@ -718,7 +829,6 @@
     font-size: 0.95rem;
     position: relative;
   }
-
   .cta-banner .btn-primary { position: relative; }
 
   /* ─── FOOTER ─── */
@@ -729,10 +839,7 @@
     color: rgba(255,255,255,0.75);
   }
 
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
 
   .footer-grid {
     display: grid;
@@ -751,7 +858,6 @@
     margin-bottom: 0.8rem;
     display: block;
   }
-
   .footer-logo p {
     font-size: 0.82rem;
     color: rgba(255,255,255,0.45);
@@ -759,7 +865,6 @@
     line-height: 1.7;
     max-width: 240px;
   }
-
   .footer-col h4 {
     font-size: 0.65rem;
     letter-spacing: 0.35em;
@@ -768,24 +873,22 @@
     margin-bottom: 1.2rem;
     opacity: 0.8;
   }
-
   .footer-col ul {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
-
   .footer-col ul li a {
     font-size: 0.82rem;
     color: rgba(255,255,255,0.5);
     text-decoration: none;
     font-weight: 300;
-    transition: color 0.2s;
+    transition: color 0.2s, padding-left 0.2s;
   }
-
   .footer-col ul li a:hover {
     color: rgba(255,255,255,0.85);
+    padding-left: 4px;
   }
 
   .footer-bottom {
@@ -797,18 +900,12 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-
   .footer-bottom p {
     font-size: 0.75rem;
     color: rgba(255,255,255,0.3);
     font-weight: 300;
   }
-
-  .footer-social {
-    display: flex;
-    gap: 1rem;
-  }
-
+  .footer-social { display: flex; gap: 1rem; }
   .footer-social a {
     font-size: 0.75rem;
     color: rgba(255,255,255,0.35);
@@ -817,20 +914,16 @@
     text-transform: uppercase;
     transition: color 0.2s;
   }
+  .footer-social a:hover { color: rgba(201,168,76,0.8); }
 
-  .footer-social a:hover {
-    color: rgba(201,168,76,0.8);
-  }
-
-  /* ─── ANIMATIES ─── */
+  /* ─── KEYFRAMES ─── */
   @keyframes floatUp {
     from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes scrollPulse {
     0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
+    50%       { opacity: 1; }
   }
 
   /* ─── RESPONSIVE ─── */
@@ -843,7 +936,6 @@
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
   }
-
   @media (max-width: 600px) {
     .stappen-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
@@ -854,7 +946,7 @@
 <body>
 
 <!-- HEADER -->
-<header>
+<header id="main-header">
   <nav>
     <a href="#" class="logo-wrap">
       <img src="logo.png" alt="Veloria logo" class="logo-img">
@@ -875,6 +967,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="particles" id="particles"></div>
   <div class="hero-ornament">V</div>
   <div class="hero-inner">
     <img src="logo.png" alt="Veloria duif" class="hero-logo">
@@ -899,21 +992,15 @@
 <section class="section" id="over">
   <div class="section-inner">
     <div class="over-grid">
-      <div class="over-tekst">
+      <div class="over-tekst reveal reveal-left">
         <span class="section-label">Over Veloria</span>
         <h2 class="section-title">Een vlucht van <em>liefde</em> op uw trouwdag</h2>
         <div class="divider-goud"></div>
-        <p>
-          Bij Veloria geloven wij dat elk huwelijk een uniek verhaal vertelt. Wij bieden u de kans om dat verhaal te bekronen met een moment dat uw gasten nooit zullen vergeten: het vrijlaten van witte duiven als symbool van eeuwige liefde.
-        </p>
-        <p>
-          Onze duiven zijn zorgvuldig getraind en worden behandeld met de grootste zorg en liefde. Ze worden gebracht in sfeervolle manden en na het vrijlaten keren ze veilig terug naar hun thuis.
-        </p>
-        <p>
-          Met meer dan tien jaar ervaring in het begeleiden van trouwen en bruidsparen weten wij precies hoe wij dit moment voor u onvergetelijk kunnen maken.
-        </p>
+        <p>Bij Veloria geloven wij dat elk huwelijk een uniek verhaal vertelt. Wij bieden u de kans om dat verhaal te bekronen met een moment dat uw gasten nooit zullen vergeten: het vrijlaten van witte duiven als symbool van eeuwige liefde.</p>
+        <p>Onze duiven zijn zorgvuldig getraind en worden behandeld met de grootste zorg en liefde. Ze worden gebracht in sfeervolle manden en na het vrijlaten keren ze veilig terug naar hun thuis.</p>
+        <p>Met meer dan tien jaar ervaring in het begeleiden van trouwen en bruidsparen weten wij precies hoe wij dit moment voor u onvergetelijk kunnen maken.</p>
       </div>
-      <div class="over-visual">
+      <div class="over-visual reveal reveal-right">
         <div class="over-cirkel">
           <img src="logo.png" alt="Veloria logo">
         </div>
@@ -924,11 +1011,11 @@
 
 <!-- PAKKETTEN -->
 <section class="pakketten-bg" id="pakketten">
-  <span class="pakketten-label">Onze diensten</span>
-  <h2 class="pakketten-titel">Kies uw droommoment</h2>
-  <p class="pakketten-onder">Elk pakket is met liefde samengesteld voor uw grote dag</p>
+  <span class="pakketten-label reveal">Onze diensten</span>
+  <h2 class="pakketten-titel reveal">Kies uw droommoment</h2>
+  <p class="pakketten-onder reveal">Elk pakket is met liefde samengesteld voor uw grote dag</p>
 
-  <div class="pakketten-grid">
+  <div class="pakketten-grid stagger-children">
 
     <div class="pakket-card">
       <div class="pakket-naam">Romantiek</div>
@@ -988,10 +1075,10 @@
 <!-- HOE HET WERKT -->
 <section class="section" id="werkwijze">
   <div class="section-inner">
-    <span class="section-label">Werkwijze</span>
-    <h2 class="section-title">Van droom tot <em>vlucht</em></h2>
-    <div class="divider-goud"></div>
-    <div class="stappen-grid">
+    <span class="section-label reveal">Werkwijze</span>
+    <h2 class="section-title reveal">Van droom tot <em>vlucht</em></h2>
+    <div class="divider-goud reveal"></div>
+    <div class="stappen-grid stagger-children">
       <div class="stap">
         <div class="stap-nummer">01</div>
         <div class="stap-icoon">📞</div>
@@ -1022,9 +1109,9 @@
 
 <!-- TESTIMONIALS -->
 <section class="getuigenissen-bg">
-  <span class="pakketten-label">Ervaringen</span>
-  <h2 class="pakketten-titel">Wat bruidsparen zeggen</h2>
-  <div class="getuigenissen-grid">
+  <span class="pakketten-label reveal">Ervaringen</span>
+  <h2 class="pakketten-titel reveal">Wat bruidsparen zeggen</h2>
+  <div class="getuigenissen-grid stagger-children">
     <div class="getuigenis">
       <div class="sterren">★★★★★</div>
       <p class="getuigenis-tekst">"Het moment dat de duiven opstegen was zo ontroerend mooi. Onze gasten waren volledig stil. Dit was het hoogtepunt van onze trouwdag."</p>
@@ -1046,10 +1133,10 @@
 <!-- FAQ -->
 <section class="section" id="faq">
   <div class="section-inner">
-    <span class="section-label">Veelgestelde vragen</span>
-    <h2 class="section-title">Alles wat u wilt <em>weten</em></h2>
-    <div class="divider-goud"></div>
-    <div class="faq-list">
+    <span class="section-label reveal">Veelgestelde vragen</span>
+    <h2 class="section-title reveal">Alles wat u wilt <em>weten</em></h2>
+    <div class="divider-goud reveal"></div>
+    <div class="faq-list reveal">
 
       <details class="faq-item">
         <summary class="faq-vraag">Zijn de duiven veilig na het vrijlaten?</summary>
@@ -1081,7 +1168,7 @@
 </section>
 
 <!-- CTA BANNER -->
-<section class="cta-banner" id="contact">
+<section class="cta-banner reveal reveal-scale" id="contact">
   <h2>Klaar voor uw onvergetelijk moment?</h2>
   <p>Reserveer uw trouwduiven vandaag nog en maak uw grote dag compleet.</p>
   <a href="mailto:info@veloria.nl" class="btn-primary">Neem contact op</a>
@@ -1090,7 +1177,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-grid">
+    <div class="footer-grid reveal">
       <div class="footer-logo">
         <span class="naam">Veloria</span>
         <p>Wij brengen magie en symboliek op uw mooiste dag. Witte duiven als eeuwig symbool van liefde, vrede en een nieuw begin samen.</p>
@@ -1133,5 +1220,95 @@
   </div>
 </footer>
 
+<script>
+  // ─── FLOATING PARTICLES in hero
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1.5;
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      bottom: -10px;
+      width: ${size}px;
+      height: ${size}px;
+      --dx: ${(Math.random() - 0.5) * 120}px;
+      animation-duration: ${6 + Math.random() * 10}s;
+      animation-delay: ${Math.random() * 8}s;
+    `;
+    container.appendChild(p);
+  }
+
+  // ─── HEADER shadow on scroll
+  const header = document.getElementById('main-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // ─── INTERSECTION OBSERVER for scroll reveals
+  const revealEls = document.querySelectorAll('.reveal');
+  const staggerEls = document.querySelectorAll('.stagger-children');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+  staggerEls.forEach(el => observer.observe(el));
+
+  // ─── PARALLAX subtle effect on hero logo
+  const heroLogo = document.querySelector('.hero-logo');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroLogo && y < window.innerHeight) {
+      heroLogo.style.transform = `translateY(${y * 0.12}px)`;
+    }
+  }, { passive: true });
+
+  // ─── COUNTER animation for prices
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const duration = 1200;
+    const start = performance.now();
+    const req = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(ease * target);
+      if (t < 1) requestAnimationFrame(req);
+    };
+    requestAnimationFrame(req);
+  }
+
+  // Wrap price numbers for counter animation
+  document.querySelectorAll('.pakket-prijs').forEach(el => {
+    const sup = el.querySelector('sup');
+    const text = el.textContent.replace('€', '').trim();
+    const num = parseInt(text);
+    if (!isNaN(num)) {
+      const span = document.createElement('span');
+      span.dataset.target = num;
+      span.textContent = num;
+      el.innerHTML = '';
+      if (sup) el.appendChild(sup);
+      el.appendChild(span);
+    }
+  });
+
+  const priceObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('span[data-target]').forEach(animateCounter);
+        priceObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.pakket-card').forEach(card => priceObserver.observe(card));
+</script>
 </body>
 </html>
